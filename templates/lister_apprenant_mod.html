@@ -1,0 +1,97 @@
+{%extends 'accueil.html'%} 
+{%block corps%}  
+   <div style=" margin: 10px;"> 
+      <form class="ui form" style="width:50%" method = "POST">
+         <h4 class="ui dividing header" style="text-align:center">LISTE DES APPRENANTS</h4>
+            <!-- Combox genre -->
+         <div class="two fields">
+            <div class="field">
+               <label>Promotion</label>
+               <select class="ui fluid dropdown" name="promo">
+                  <option value="">Choisir promotion</option>
+                  {% for promo in requete_promo%}
+                     <option value="{{ promo[0] }}">{{ promo[1] }}</option>
+                  {% endfor %}
+               </select>
+            </div>   
+            <div class="field">
+               <button type="submit"  value="ajout_app" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 100px;height: 35px; margin-top:24px ">Rechercher</button>
+            </div>
+         </div>  
+      </form>
+      <!-- Tableau -->
+      <table class="table table-striped" style="text-align:center">
+         <thead>
+            <tr style="background-color:#328f8e; color: white ">
+               <th >ID</th>
+               <th>prenom</th>
+               <th>nom</th>
+               <th>sexe</th>
+               <th>adresse</th>
+               <th>tel</th>
+               <th>email</th>
+               <th>statut</th>
+               <th>promo</th>
+               <th colspan="2">action</th>   
+            </tr>
+         </thead>
+         {% for val in result %}
+            <tbody>
+            {%if val[7]=="annuler"%}
+               <tr style="background-color:#ec4f52">
+                  <td>{{val[0]}}</td>
+                  <td>{{val[1]}}</td>
+                  <td>{{val[2]}}</td>
+                  <td>{{val[3]}}</td>
+                  <td>{{val[4]}}</td>
+                  <td>{{val[5]}}</td>
+                  <td>{{val[6]}}</td>
+                  <td>{{val[7]}}</td>
+                  <td>{{val[8]}}</td>
+                  <td>
+                     <a href="/scolarite/modifier&{{val[0]}}" data-tooltip="Modifier" data-position="left center" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 30px; margin-top:0px ">
+                        <i class="edit icon" > </i>
+                     </a>
+                  </td>     
+               </tr>
+            {%elif val[7]=="suspendre"%}
+               <tr style="background-color:#ee7b7e">
+                  <td>{{val[0]}}</td>
+                  <td>{{val[1]}}</td>
+                  <td>{{val[2]}}</td>
+                  <td>{{val[3]}}</td>
+                  <td>{{val[4]}}</td>
+                  <td>{{val[5]}}</td>
+                  <td>{{val[6]}}</td>
+                  <td>{{val[7]}}</td>
+                  <td>{{val[8]}}</td>
+                  <td>
+                     <a href="/scolarite/modifier&{{val[0]}}" data-tooltip="Modifier" data-position="left center" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 30px; margin-top:0px ">
+                        <i class="edit icon" > </i>
+                     </a>
+                  </td>      
+               </tr>
+            {%else%}
+               <tr>
+                  <td>{{val[0]}}</td>
+                  <td>{{val[1]}}</td>
+                  <td>{{val[2]}}</td>
+                  <td>{{val[3]}}</td>
+                  <td>{{val[4]}}</td>
+                  <td>{{val[5]}}</td>
+                  <td>{{val[6]}}</td>
+                  <td>{{val[7]}}</td>
+                  <td>{{val[8]}}</td>
+                  <td>
+                     <a href="/scolarite/modifier&{{val[0]}}" data-tooltip="Modifier" data-position="left center" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 30px; margin-top:0px ">
+                        <i class="edit icon" ></i>
+                     </a>
+                  </td>          
+               </tr>
+            {%endif%}
+            </tbody>
+         {%endfor%}  
+      </table>
+   </div>
+{%endblock%}   
+

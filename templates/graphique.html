@@ -1,0 +1,57 @@
+{%extends 'accueil.html'%} 
+{%block corps%}
+   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+   <div class="two fields" style="display:flex;margin: 10px">      
+      <div class="required field" >
+         <canvas id="myChart" width="500" height="400"></canvas>
+      </div>
+         
+      <div class="required field">
+         <canvas id="mChart" width="450" height="400"></canvas>
+      </div>     
+   </div>
+
+   <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var chart = new Chart(ctx, {
+         type:"doughnut",
+         data:{
+            labels:["Inscris","Réinscris","Suspendus","Annulés"],
+            datasets:[{
+               "data":{{liste_statut}},
+               backgroundColor:["#328f8e","#ee8029","#000000","#ec4f52"]
+            }]
+         },
+         options:{
+            title:{
+               display: true,
+               text: 'LISTE TOTAL DES APPRENANTS'
+            }
+         }
+      });
+   </script>
+  
+   <script>
+      var myChart = new Chart(document.getElementById("mChart"), {
+         type: 'bar',
+         data: {
+            labels:[{% for label in promo_label %} "{{label}}", {% endfor %}] ,
+            datasets: [
+            {
+               label: "Apprenants",
+               backgroundColor: "#3e95cd",
+               data: {{compt_app}}
+            }
+         
+            ]
+         },
+         options: {
+            title: {
+               display: true,
+               text: 'LISTE APPRENANT PAR PROMOTION'
+            }
+         }
+      });
+   </script>
+{%endblock corps%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

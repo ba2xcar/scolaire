@@ -1,0 +1,82 @@
+{%extends 'accueil.html'%} 
+{%block corps%}
+   <!-- Formulaire -->
+   <form class="ui form" style="width:50%" method = "POST">
+      <h4 class="ui dividing header">MODIFIER UNE PROMOTION</h4>   
+      {% for promo in result_up_promo %}
+         <!-- Champ nom promo -->
+         <div class="two fields">
+            <div class="required field">
+               <label>Promotion</label>
+               <input type="text" name="nom_promo" value="{{ promo[0] }}">
+            </div>
+         </div>    
+
+         <div class="two fields" >
+            <div class="required field">
+               <label>Référentiel</label>
+               <select class="ui fluid dropdown" name="id_ref">  
+                  <option value="{{ promo[1] }}">{{ promo[2] }}</option>
+                  {% for val in result_ref %}
+                     <option value="{{ val[0] }}"> {{ val[1] }} </option>
+                  {% endfor %}
+               </select>
+            </div>   
+         </div> 
+         <div class="two fields">      
+            <div class="required field">
+               <label>Date début</label>
+               <input type="date" name="startdate" value="{{ promo[3] }}">
+            </div>
+               
+            <div class="required field">
+               <label>Date fin</label>
+               <input type="date" name="enddate" value="{{ promo[4] }}">
+            </div>
+         </div> 
+      {% endfor %}
+      <div class="two fields">
+         <div class="field" style="width:auto">
+            <button type="submit" value="ajout_ref" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Modifier</button>
+         </div>
+         <div class="field">
+            <a href="{{ url_for('lister_promo') }}" class="btn btn-primary" style="background:#c93934; border: #c93934; width: 90px; margin-top:8px ">Annuler</a>
+         </div>
+      </div>
+      {% with messages = get_flashed_messages() %}
+         {% for message in messages %} 
+               <script>
+                  var someJavaScriptVar = '{{ message }}';
+               </script>
+
+            {% if message%}
+               {% if message=="WARNING : La promotion existe déjà" %}
+                  <script type="text/javascript">
+                     $().ready(function() {
+                        $.uiAlert({
+                           textHead: someJavaScriptVar,
+                           text: '', // Text
+                           bgcolor: '#DB2828', // background-color
+                           textcolor: '#fff', // color
+                           position: 'top-center',// position . top And bottom ||  left / center / right
+                           time: 3, // time
+                        })
+                     });
+                  </script>
+               {%endif%}
+            {%endif%}
+         {% endfor %}      
+      {% endwith %}
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               nom_promo      : 'empty',
+               startdate      : 'empty',
+               enddate        : 'empty',
+               id_ref        : 'empty'                  
+            }
+         });
+      </script>
+   </form>  
+{%endblock corps%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

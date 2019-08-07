@@ -1,0 +1,50 @@
+{%extends 'accueil.html'%} 
+{%block corps%}         
+   <!-- Formulaire -->
+   <form class="ui form" style="width:50%" method = "POST">
+      <h4 class="ui dividing header">REINSCRIRE UN APPRENANT</h4>
+      {% for val in result_up %}
+         <!-- Champ promotion -->
+         <div class="two fields" >
+            <div class="required field">
+               <label>Promotion</label>
+               <select class="ui fluid dropdown" name="promo"> 
+                  {% for promo_before in result_promo_before %} 
+                     <option value="{{promo_before[0]}}">{{promo_before[1]}}</option>
+                  {% endfor %}                
+                  {% for promo in result_promo %} 
+                     <option value="{{promo[0]}}">{{promo[1]}}</option>
+                  {% endfor %} 
+               </select>
+            </div>   
+         </div> 
+      {% endfor %} 
+      <div class="two fields">
+         <div class="field" style="width:auto">
+            <button  href="{{ url_for('modifier_app') }}" value="ajout_app" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Réinscrire</button>
+         </div>
+         <div class="field">
+               <a href="{{ url_for('lister_suspendre') }}" class="btn btn-primary" style="background:#c93934; border: #c93934; width: 90px; margin-top:8px ">Annuler</a>
+         </div>
+      </div>
+      
+      <!-- Script pour la validation des champs -->
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               prenom         : 'empty',
+               nom            : 'empty',
+               sexe           : 'empty',
+               date_naissance : 'empty',
+               lieu_naissance : 'empty',
+               adresse        : 'empty',
+               email          : 'empty',
+               telephone      : 'empty',
+               promo          : 'empty',
+               prompt : 'Please enter a username'
+            }
+         });
+      </script>
+   </form>
+{%endblock%}   

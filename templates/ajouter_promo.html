@@ -1,0 +1,89 @@
+{%extends 'accueil.html'%} 
+{%block corps%}
+   <!-- Formulaire -->
+   <form class="ui form" style="width:50%" method = "POST">
+      <h4 class="ui dividing header" style="text-align:center">AJOUTER UNE PROMOTION</h4>   
+      
+      <!-- Champ nom promo -->
+      <div class="two fields">
+         <div class="required field">
+            <label>Promotion</label>
+            <input type="text" name="nom_promo" placeholder="Nom promotion" value="{{nom_promo}}">
+         </div>
+      </div>    
+
+      <div class="two fields" >
+         <div class="required field">
+            <label>Référentiel</label>
+            <select class="ui fluid dropdown" name="id_ref">  
+               <option value="">Choisir référentiel</option>
+               {% for val in result %}
+                  <option value="{{ val[0] }}">{{ val[1] }}</option>
+               {% endfor %} 
+            </select>
+         </div>   
+      </div>     
+
+      <div class="two fields">      
+         <div class="required field">
+            <label>Date début</label>
+            <input type="date" name="startdate" value="{{date_debut}}">
+         </div>
+            
+         <div class="required field">
+            <label>Date fin</label>
+            <input type="date" name="enddate" value="{{date_fin}}">
+         </div>
+      </div> 
+
+      <button type="submit" value="ajout_ref" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Ajouter</button>
+      
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               nom_promo      : 'empty',
+               startdate      : 'empty',
+               enddate        : 'empty',
+               id_ref         : 'empty',                
+            }
+         });
+      </script>
+      {% with messages = get_flashed_messages() %}
+         {% for message in messages %} 
+            <script>
+               var someJavaScriptVar = '{{ message }}';
+            </script>
+            {% if message%}
+               {% if message=="SUCCES : Promotion ajoutée avec succès!!!" %}
+               <script type="text/javascript">
+                  $('#btnDangerCenter').ready(function() {
+                     $.uiAlert({
+                        textHead: someJavaScriptVar,
+                        text: '', // Text
+                        bgcolor: '#19c3aa', // background-color
+                        textcolor: '#fff', // color
+                        position: 'top-center',// position . top And bottom ||  left / center / right
+                        time: 3, // time
+                     })
+                  });
+               </script>
+               {% else %}
+                  <script type="text/javascript">
+                     $().ready(function() {
+                        $.uiAlert({
+                           textHead: someJavaScriptVar,
+                           text: '', // Text
+                           bgcolor: '#DB2828', // background-color
+                           textcolor: '#fff', // color
+                           position: 'top-center',// position . top And bottom ||  left / center / right
+                           time: 5, // time
+                        })
+                     });
+                  </script>
+               {%endif%}
+            {%endif%}
+         {% endfor %}      
+      {% endwith %}
+   </form>  
+{%endblock corps%}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

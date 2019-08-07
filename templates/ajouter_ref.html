@@ -1,0 +1,63 @@
+{%extends 'accueil.html'%} 
+{%block corps%}            
+   <form class="ui form" style="width:50%" method = "POST">
+      <h4 class="ui dividing header">AJOUTER UN REFERENTIEL</h4>
+   
+      <div class="two fields">
+         <div class="required field">
+            <label>Nom référentiel</label>
+            <input type="text" name="nom_ref" placeholder="Data artisan" value="{{ nom_ref }}">
+         </div>     
+      </div>  
+   
+      <button type="submit" value="ajout_ref" class="ui button teal" id="btnDangerCenter" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Ajouter</button>
+     
+      {% with messages = get_flashed_messages() %}
+         {% for message in messages %} 
+            <script>
+               var someJavaScriptVar = '{{ message }}';
+            </script>
+
+            {% if message%}
+               {% if message=="WARNING : Le référentiel existe déjà" %}
+               <script type="text/javascript">
+                  $('#btnDangerCenter').ready(function() {
+                     $.uiAlert({
+                        textHead: someJavaScriptVar,
+                        text: '', // Text
+                        bgcolor: '#DB2828', // background-color
+                        textcolor: '#fff', // color
+                        position: 'top-center',// position . top And bottom ||  left / center / right
+                        time: 3, // time
+                     })
+                  });
+               </script>
+               {% else %}
+                  <script type="text/javascript">
+                     $('#btnDangerCenter').ready(function() {
+                        $.uiAlert({
+                           textHead: someJavaScriptVar,
+                           text: '', // Text
+                           bgcolor: '#19c3aa', // background-color
+                           textcolor: '#fff', // color
+                           position: 'top-center',// position . top And bottom ||  left / center / right
+                           time: 3, // time
+                        })
+                     });
+                  </script>
+               {%endif%}
+
+            {%endif%}
+         {% endfor %}      
+      {% endwith %}
+      <!-- Script pour la validation des champs -->
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               nom_ref : 'empty',
+            }
+         });
+      </script>
+   </form>
+{%endblock corps%}   

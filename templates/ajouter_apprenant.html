@@ -1,0 +1,148 @@
+{%extends 'accueil.html'%} 
+{%block corps%}         
+   <!-- Formulaire -->
+   <form class="ui form" style="width:50%" method = "POST">
+      <h4 class="ui dividing header" style="text-align:center">AJOUTER UN APPRENANT</h4>
+         
+      <!-- Champ matricule -->
+      <div class="two fields">      
+         <div class="field">
+            <label>Matricule</label>
+            <input type="text" name="matricule" readonly="true" value="{{ gen_mat }}">
+         </div>
+      </div>
+      <!-- Champ prenom et nom -->
+      <div class="two fields">      
+         <div class="required field">
+            <label>Prénom</label>
+            <input type="text" name="prenom" placeholder="Prénom" value="{{prenom}}" pattern=".*\S.*">
+         </div>
+            
+         <div class="required field">
+            <label>Nom</label>
+            <input type="text" name="nom" placeholder="Nom de famille" value="{{nom}}" pattern=".*\S.*">
+         </div>
+      </div>
+
+      <!-- Combox genre -->
+      <div class="two fields">
+         <div class="required field">
+            <label>Sexe</label>
+            <select class="ui fluid dropdown" name="sexe">
+               <option value="">Choisir genre</option>
+               <option value="Masculin">Masculin</option>
+               <option value="Féminin">Féminin</option> 
+            </select>
+         </div>   
+      </div>  
+
+      <!-- Champ date naissance et lieu de naissance -->
+      <div class="two fields">
+         <div class="required field">
+            <label>Date de naissance</label>
+            <input type="date" name="date_naissance" max="2005-01-01" value="{{ date_naissance }}">
+         </div>    
+         <div class="required field">
+            <label>Lieu de naissance</label>
+            <input type="text" name="lieu_naissance" placeholder="Lieu de naissance" value="{{ lieu_naissance }}">
+         </div>
+      </div>
+
+      <!-- Champ adresse -->
+      <div class="two fields" id="">
+         <div class="required field">
+            <label>Adresse</label>
+            <input type="text" name="adresse" placeholder="ville" value="{{ adresse }}">
+         </div>
+      </div>
+      
+      <!-- Champ contact -->
+      <div class="two fields">
+         <div class="required field">
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="mamadou@gmail.com" value="{{ email }}">
+         </div>    
+         <div class="required field">
+            <label>Téléphone : <em> format(xx-xxx-xx-xx)</em></label>
+            <input type="tel" pattern="[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
+               name="telephone" placeholder="xx-xxx-xx-xx" value="{{ telephone }}">
+         </div>
+      </div>
+      
+      <!-- Champ promotion -->  
+      <div class="two fields" >
+         <div class="required field">
+            <label>Promotion</label>
+            <select class="ui fluid dropdown" name="promo">  
+               <option value="">Choisir promotion</option>    
+               {% for val in valeurs %}
+                  <option value="{{ val[0] }}">{{ val[1] }}</option>
+               {% endfor %} 
+            </select>
+         </div>   
+      </div> 
+    
+      <div class="two fields">
+         <div class="field" style="width:auto">
+            <button type="submit"  value="ajout_app" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Ajouter</button>
+         </div>
+         <div class="field">
+            <button type="reset" value="annuler" class="btn btn-primary" style="background:#c93934; border: #c93934; width: 90px; margin-top:8px ">Annuler</button>
+         </div>
+      </div>
+      {% with messages = get_flashed_messages() %}
+         {% for message in messages %} 
+         <script>
+            var someJavaScriptVar = '{{ message }}';
+         </script>
+
+            {% if message%}
+               {% if message=="WARNING : L'apprenant existe déjà" %}
+               <script type="text/javascript">
+                  $('#btnDangerCenter').ready(function() {
+                     $.uiAlert({
+                        textHead: someJavaScriptVar,
+                        text: '', // Text
+                        bgcolor: '#DB2828', // background-color
+                        textcolor: '#fff', // color
+                        position: 'top-center',// position . top And bottom ||  left / center / right
+                        time: 3, // time
+                     })
+                  });
+               </script>
+               {% else %}
+                  <script type="text/javascript">
+                     $('#btnDangerCenter').ready(function() {
+                        $.uiAlert({
+                           textHead: someJavaScriptVar,
+                           text: '', // Text
+                           bgcolor: '#19c3aa', // background-color
+                           textcolor: '#fff', // color
+                           position: 'top-center',// position . top And bottom ||  left / center / right
+                           time: 3, // time
+                        })
+                     });
+                  </script>
+               {%endif%}
+            {%endif%}
+         {% endfor %}      
+      {% endwith %}
+      <!-- Script pour la validation des champs -->
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               prenom         : 'empty',
+               nom            : 'empty',
+               sexe           : 'empty',
+               date_naissance : 'empty',
+               lieu_naissance : 'empty',
+               adresse        : 'empty',
+               email          : 'empty',
+               telephone      : 'empty',
+               promo          : 'empty',
+            }
+         });
+      </script>
+   </form>
+{%endblock%}   

@@ -1,0 +1,99 @@
+{%extends 'accueil_admin.html'%} 
+{%block corps%}         
+   <!-- Formulaire -->
+   <form class="ui form" style="width:50%" method = "POST" enctype = "multipart/form-data">
+      <h4 class="ui dividing header" style="text-align:center">AJOUTER UN UTILISATEUR</h4>
+         
+      <!-- Champ prenom et nom -->
+      <div class="two fields">      
+         <div class="required field">
+            <label>Prénom</label>
+            <input type="text" name="prenom" placeholder="Prénom" value="{{prenom_user}}">
+         </div>
+            
+         <div class="required field">
+            <label>Nom</label>
+            <input type="text" name="nom" placeholder="Nom de famille" value="{{nom_user}}">
+         </div>
+      </div>
+      
+      <!-- Username et password -->
+      <div class="two fields">
+         <div class="required field">
+            <label>Nom d'utilisateur</label>
+            <input type="text" name="username" value="{{ username }}">
+         </div>    
+         <div class="required field">
+            <label>Mot de passe:</label>
+            <input type="password" name="password">
+         </div>
+      </div>
+
+      <!-- Champ prenom et nom -->
+      <div class="two fields">      
+         <div class="required field">
+            <label>Choisir image</label>
+            <input type="file" name="image" accept="image/png, image/jpeg">
+         </div>
+      </div>
+    
+      <div class="two fields">
+         <div class="field" style="width:auto">
+            <button type="submit"  value="ajout_app" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Ajouter</button>
+         </div>
+         <div class="field">
+            <button type="reset" value="annuler" class="btn btn-primary" style="background:#c93934; border: #c93934; width: 90px; margin-top:8px ">Annuler</button>
+         </div>
+      </div>
+      {% with messages = get_flashed_messages() %}
+         {% for message in messages %} 
+         <script>
+            var someJavaScriptVar = '{{ message }}';
+         </script>
+
+            {% if message%}
+               {% if message=="WARNING : L'utlisateur existe déjà" %}
+               <script type="text/javascript">
+                  $('#btnDangerCenter').ready(function() {
+                     $.uiAlert({
+                        textHead: someJavaScriptVar,
+                        text: '', // Text
+                        bgcolor: '#DB2828', // background-color
+                        textcolor: '#fff', // color
+                        position: 'top-center',// position . top And bottom ||  left / center / right
+                        time: 3, // time
+                     })
+                  });
+               </script>
+               {% else %}
+                  <script type="text/javascript">
+                     $('#btnDangerCenter').ready(function() {
+                        $.uiAlert({
+                           textHead: someJavaScriptVar,
+                           text: '', // Text
+                           bgcolor: '#19c3aa', // background-color
+                           textcolor: '#fff', // color
+                           position: 'top-center',// position . top And bottom ||  left / center / right
+                           time: 3, // time
+                        })
+                     });
+                  </script>
+               {%endif%}
+            {%endif%}
+         {% endfor %}      
+      {% endwith %}
+      <!-- Script pour la validation des champs -->
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               prenom         : 'empty',
+               nom            : 'empty',
+               username       : 'empty',
+               password       : 'empty',  
+               image          : 'empty'
+            }
+         });
+      </script>
+   </form>
+{%endblock%}   

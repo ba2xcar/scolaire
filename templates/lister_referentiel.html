@@ -1,0 +1,52 @@
+{%extends 'accueil.html'%} 
+{%block corps%}
+   <div style=" margin: 10px;"> 
+      <h4 class="ui dividing header" style="text-align:center">LISTE DES REFERENTIELS</h4>          
+      <!-- Tableau -->
+      <table class="table table-striped" style="width:100%;text-align:center">
+         <thead>
+            <tr style="background-color:#328f8e; color: white ">
+               <th >ID</th>
+               <th>nom_referentiel</th>
+               <th>action</th>
+            </tr>
+         </thead>
+         <tbody>
+            {% for val in result %}
+            <tr>
+               <td>{{val[0]}}</td>
+               <td>{{val[1]}}</td>
+               <td>
+                  <a href="/referent/modifier&{{val[0]}}" data-tooltip="Modifier" data-position="left center" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 30px; margin-top:0px ">
+                     <i class="edit icon" style="margin: 0 auto"> </i>
+                  </a>
+               </td>  
+            </tr>
+            {% endfor%}  
+         </tbody>
+      </table>
+   </div> 
+   {% with messages = get_flashed_messages() %}
+      {% for message in messages %} 
+         <script>
+            var someJavaScriptVar = '{{ message }}';
+         </script>
+
+         {% if message%}
+            <script type="text/javascript">
+               $('#btnDangerCenter').ready(function() {
+                  $.uiAlert({
+                     textHead: someJavaScriptVar,
+                     text: '', // Text
+                     bgcolor: '#19c3aa', // background-color
+                     textcolor: '#fff', // color
+                     position: 'top-center',// position . top And bottom ||  left / center / right
+                     time: 3, // time
+                  })
+               });
+            </script>
+         {%endif%}
+      {% endfor %}      
+   {% endwith %}  
+{%endblock%}   
+

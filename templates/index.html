@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Login</title>
+      <link rel="icon" href="{{ url_for('static', filename = 'images/sonatel.png') }}" type="image/png">
+      <meta charset="UTF-8">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'bootstrap-4.3.1/css/bootstrap.min.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'material-design-iconic-font.min.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'main.css') }}">
+
+      <!-- Semantic Alerte -->
+      <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'Semantic-UI-CSS-master/semantic.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'Semantic-UI-CSS-master/semantic.js') }}">
+      <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.7.6/dist/semantic.min.css">
+
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'Semantic-UI-CSS-master/Semantic-UI-Alert.css') }}">
+      <script type="text/javascript" src="{{ url_for('static', filename = 'Semantic-UI-CSS-master/Semantic-UI-Alert.js') }}"></script>
+   </head>
+   <body>	
+      <div class="limiter">
+         <div class="container-login">
+            <div class="wrap-login">
+               <form class="login-form validate-form" method="POST">
+                  <span class="login-form-title p-b-26">
+                     Bienvenue
+                  </span>
+                  <span class="login-form-title p-b-48" style="margin-top:15px; margin-bottom: 50px">
+                     <img src="{{ url_for('static', filename = 'images/sonatel.gif') }}" alt="" style="width:70px">
+                  </span>
+
+                  <div class="wrap-input100" >
+                     <input class="input100" type="text" name="username">
+                     <span class="focus-input100" data-placeholder="Nom d'utilisateur"></span>
+                  </div>
+
+                  <div class="wrap-input100">
+                     <span class="btn-show-pass"></span>
+                     <input class="input100" type="password" name="password">
+                     <span class="focus-input100" data-placeholder="Mot de passe"></span>
+                  </div>
+
+                  <div class="container-login-form-btn">
+                     <div class="wrap-login-form-btn">
+                        <div class="login-form-bgbtn"></div>
+                        <button type="submit" class="login-form-btn">
+                           Se connecter
+                        </button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+	   <div id="dropDownSelect1"></div>
+      
+      <script type="text/javascript" src="{{ url_for('static', filename = 'main.js') }}"></script>
+	   {% with messages = get_flashed_messages() %}
+         {% for message in messages %} 
+            <script>
+               var someJavaScriptVar = '{{ message }}';
+            </script>
+
+            {% if message%}
+    
+               <script type="text/javascript">
+                  $('#btnDangerCenter').ready(function() {
+                     $.uiAlert({
+                        textHead: someJavaScriptVar,
+                        text: '', // Text
+                        bgcolor: '#DB2828', // background-color
+                        textcolor: '#fff', // color
+                        position: 'top-center',// position . top And bottom ||  left / center / right
+                        time: 5, // time
+                     })
+                  });
+               </script>
+
+            {%endif%}
+         {% endfor %}      
+      {% endwith %}
+   </body>
+</html>

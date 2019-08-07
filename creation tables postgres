@@ -1,0 +1,38 @@
+**************************************************************
+Script 
+**************************
+
+CREATE TABLE Referentiel(
+        id_ref  SERIAL PRIMARY KEY ,
+        libelle Varchar (50) NOT NULL
+);
+
+CREATE TABLE Promotion(
+        id_promo   SERIAL PRIMARY KEY,
+        libelle    Varchar (50) NOT NULL ,
+        date_debut Date NOT NULL ,
+        date_fin   Date NOT NULL ,
+        id_ref INT REFERENCES referentiel (id_ref)
+);
+
+CREATE TABLE Apprenant(
+        id_app         SERIAL PRIMARY KEY ,
+	matricule	Varchar (50) NOT NULL ,
+        prenom         Varchar (50) NOT NULL ,
+        nom            Varchar (50) NOT NULL ,
+        date_naissance Date NOT NULL ,
+        sexe           Varchar (50) NOT NULL ,
+        adresse        Varchar (100) NOT NULL ,
+        telephone      Varchar (50) NOT NULL ,
+        email          Varchar (100) NOT NULL ,
+        statut         Varchar (50) NOT NULL ,
+        lieu_naissance Varchar (50) NOT NULL ,
+        id_promo  INT REFERENCES promotion (id_promo))
+
+CREATE TABLE authentification(
+        id_authen   SERIAL PRIMARY KEY,
+	prenom      Varchar (50) NOT NULL ,
+	nom    	    Varchar (50) NOT NULL ,
+        username    Varchar (50) NOT NULL ,
+        passe       Varchar (50) NOT NULL 		
+);

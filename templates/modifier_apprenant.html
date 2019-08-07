@@ -1,0 +1,118 @@
+{%extends 'accueil.html'%} 
+{%block corps%}         
+   <!-- Formulaire -->
+   <form class="ui form" style="width:50%" method = "POST">
+      <h4 class="ui dividing header" style="text-align:center">MODIFIER UN APPRENANT</h4>
+      {% for val in result_up %}
+         <!-- Champ matricule -->
+         <div class="two fields">      
+            <div class="field">
+               <label>Matricule</label>
+               <input type="text" name="matricule" readonly="true" value="{{val[0]}}">
+            
+            </div>
+         </div>
+         <!-- Champ prenom et nom -->
+         <div class="two fields">      
+            <div class="required field">
+               <label>Prénom</label>
+               <input type="text" name="prenom" value="{{val[1]}}">
+            </div>
+         
+            <div class="required field">
+               <label>Nom</label>
+               <input type="text" name="nom" value="{{val[2]}}">
+            </div>
+         </div>
+
+         <!-- Combox genre -->
+         <div class="two fields" >
+            <div class="required field">
+               <label>Sexe</label>
+               <select class="ui fluid dropdown" name="sexe">
+                  {% if val[3]=='Féminin' %}
+                  <option value="{{val[3]}}">{{val[3]}}</option>
+                  <option value="Masculin">Masculin</option> 
+                  {% else %} 
+                  <option value="{{val[3]}}">{{val[3]}}</option>
+                  <option value="Féminin">Féminin</option> 
+                  {% endif %}
+               </select>
+            </div>   
+         </div> 
+   
+         <!-- Champ date naissance et lieu de naissance -->
+         <div class="two fields">
+            <div class="required field">
+               <label>Date de naissance</label>
+               <input type="date" name="date_naissance" value="{{val[4]}}" max="2005-01-01">
+            </div>    
+            <div class="required field">
+               <label>Lieu de naissance</label>
+               <input type="text" name="lieu_naissance" value="{{val[5]}}">
+            </div>
+         </div>
+   
+         <!-- Champ adresse -->
+         <div class="two fields" id="">
+            <div class="required field">
+               <label>Adresse</label>
+               <input type="text" name="adresse" value="{{val[6]}}">
+            </div>
+         </div>
+         
+         <!-- Champ contact -->
+         <div class="two fields">
+            <div class="required field">
+               <label>E-mail</label>
+               <input type="email" name="email" value="{{val[7]}}">
+            </div>    
+            <div class="required field">
+               <label>Téléphone : <em>format(xx-xxx-xx-xx)</em></label>
+               <input type="tel" placeholder="xx-xxx-xx-xx" pattern="[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}" name="telephone" value="{{val[8]}}">
+            </div>
+         </div>
+   
+   
+         <!-- Champ promotion -->
+         <div class="two fields" >
+            <div class="required field">
+               <label>Promotion</label>
+               <select class="ui fluid dropdown" name="promo">                
+                  <option value="{{val[9]}}">{{val[10]}}</option> 
+                  {% for promo in result_promo %}              
+                     <option value="{{promo[0]}}">{{promo[1]}}</option>
+                  {% endfor %} 
+               </select>
+            </div>   
+         </div> 
+      {% endfor %} 
+      <div class="two fields">
+         <div class="field" style="width:auto">
+            <button type="submit" value="ajout_app" class="btn btn-primary" style="background:#ee8029; border: #ee8029; width: 90px; margin-top:8px ">Modifier</button>
+         </div>
+         <div class="field">
+               <a href="{{ url_for('lister_apprenant_mod') }}" class="btn btn-primary" style="background:#c93934; border: #c93934; width: 90px; margin-top:8px ">Annuler</a>
+         </div>
+      </div>
+
+      <!-- Script pour la validation des champs -->
+      <script>
+         $('.ui.form')
+         .form({
+            fields: {
+               prenom         : 'empty',
+               nom            : 'empty',
+               sexe           : 'empty',
+               date_naissance : 'empty',
+               lieu_naissance : 'empty',
+               adresse        : 'empty',
+               email          : 'empty',
+               telephone      : 'empty',
+               promo          : 'empty',
+               prompt : 'Please enter a username'
+            }
+         });
+      </script>
+   </form>
+{%endblock%}   
